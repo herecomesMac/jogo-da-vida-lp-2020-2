@@ -1,4 +1,7 @@
-initial = [1,0,0,2,0,2,0,0,0,2,1,1,0,1,0,0]
+import System.IO
+import Control.Monad
+
+initial = ["v","m","m","z","m","z","m","m","m","z","v","v","m","v","m","m"]
 linesamount = 4
 columnsamount = 4
 
@@ -11,9 +14,9 @@ count n [] (a,b,c) = (a,b,c)
 count n indexes (a,b,c)
     | i < 0 || j < 0 = count n body (a, b, c)
     | i >= linesamount || j >= columnsamount = count n body (a, b, c)
-    | n!!index == 0 = count n body (a, b + 1, c)
-    | n!!index == 1 = count n body (a + 1, b, c)
-    | n!!index == 2 = count n body (a, b, c + 1)
+    | n!!index == "m" = count n body (a, b + 1, c)
+    | n!!index == "v" = count n body (a + 1, b, c)
+    | n!!index == "z" = count n body (a, b, c + 1)
     where body = tail indexes
           i = head indexes !! 0
           j = head indexes !! 1
@@ -27,11 +30,11 @@ adz n i = count n (getindexes (div i columnsamount) (mod i columnsamount)) (0,0,
 
 -- Classifica uma posição como viva, morta ou zumbi
 aliveordead n i 
-   | n!!i == 0 && a == 3 = 1
-   | n!!i == 1 && z >= 1 = 2
-   | n!!i == 1 && a < 2  = 0
-   | n!!i == 1 && a > 3  = 0
-   | n!!i == 2 && a == 0 = 0
+   | n!!i == "m" && a == 3 = "v"
+   | n!!i == "v" && z >= 1 = "z"
+   | n!!i == "v" && a < 2  = "m"
+   | n!!i == "v" && a > 3  = "m"
+   | n!!i == "z" && a == 0 = "m"
    | otherwise = n!!i
    where a = first (adz n i)
          d = second (adz n i)
@@ -43,17 +46,22 @@ travel n b i
    | otherwise = travel n c (i + 1)
    where c = (aliveordead n i):b
 
-
-
 -- Quantas vezes percorrer toda a tabela
-gamertime n i 
-  | i > 0 = gamertime m (i - 1)
-  | otherwise = n
-  where m = reverse (travel n [] 0)
+-- Funcao checa se: tabela atual == tabela passada
+--   Se sim: parar e retornar qtd de rodadas ate o momento e tabela atual
+--   Se não: continuar execução
+--   Se chegar ao fim do numero total de iteracoes sem estabilizar: printa estado final da tabela
 
+gamertime n i total
+  | i > 0 && m /= n = gamertime m (i - 1) total
+  | i > 0 && m == n = print (total - i)
+  | otherwise = print $ n 
+  where m = reverse (travel n [] 0)
 
 -- n é a quantidade de vezes que vai rodar
 inicio n = do
-   gamertime initial n
+   gamertime initial n n
 
 
+main = do 
+   inicio 2
