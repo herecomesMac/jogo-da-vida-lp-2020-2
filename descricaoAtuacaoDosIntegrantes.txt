@@ -1,0 +1,10 @@
+Marcos:
+  - implementação do funcionamento das regras do jogo
+  - implementação do processamento de iterações do jogo
+  - Execução do roteiro de compilação
+
+
+Viviane:
+  - implementação do processamento de input do jogo
+  - implementação do processamento de output do jogo
+  - Execução de exemplos para teste
