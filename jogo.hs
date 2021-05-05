@@ -42,11 +42,11 @@ travel n linhas colunas b i
    | otherwise = travel n linhas colunas c (i + 1)
    where c = (aliveordead n linhas colunas i):b
 
--- Quantas vezes percorrer toda a tabela
--- Funcao checa se: tabela atual == tabela passada
+
+-- Quantas vezes percorrer toda a tabela e funcao checa se: tabela atual == tabela passada (OUTPUT)
 --   Se sim: parar e retornar qtd de rodadas ate o momento e tabela atual
 --   Se não: continuar execução
---   Se chegar ao fim do numero total de iteracoes sem estabilizar: printa estado final da tabela
+--   Se chegar ao fim do numero total de iteracoes sem estabilizar: retorna estado final da tabela
 
 gamertime n linhas colunas i total
   | i > 0 && m /= n = gamertime m linhas colunas (i - 1) total
@@ -59,7 +59,11 @@ inicio n tabela linhas colunas = do
    gamertime tabela linhas colunas n n
 
 
--- le de um arquivo:
+
+-- INPUT
+
+
+-- le arquivo e mapeia os elementos do arquivo que estão organizados em:
 
 -- 1a linha: total de iteracoes
 -- 2a linha: dimensao de linhas da matriz
@@ -69,8 +73,17 @@ inicio n tabela linhas colunas = do
 readMatriz :: FilePath -> IO (Int , Int, Int, [String])
 readMatriz file = fmap (parseLinhas . words) (readFile file)
 
+
 readInt :: String -> Int
 readInt = read
+
+
+-- Divide array de string lido do arquivo em 4 elementos:
+
+-- total de iteracoes
+-- dimensao de linhas da matriz
+-- dimensao de colunas da matriz
+-- estado inicial do jogo
 
 parseLinhas :: [String] -> (Int , Int, Int, [String])
 parseLinhas (iteracoes : linhas : colunas : matriz ) = 
