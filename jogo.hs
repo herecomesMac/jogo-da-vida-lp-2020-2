@@ -95,5 +95,5 @@ parseLinhas (iteracoes : linhas : colunas : matriz ) =
         m = matriz
 
 main = do
-    (n, l, c, jogo) <- readMatriz "teste4.txt"
+    (n, l, c, jogo) <- readMatriz "teste1.txt"
     inicio n jogo l c
