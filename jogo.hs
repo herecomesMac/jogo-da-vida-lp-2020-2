@@ -95,5 +95,18 @@ parseLinhas (iteracoes : linhas : colunas : matriz ) =
         m = matriz
 
 main = do
-    (n, l, c, jogo) <- readMatriz "teste1.txt"
-    inicio n jogo l c
+   putStrLn "\nteste 1:"
+   (n1, l1, c1, jogo1) <- readMatriz "teste.txt"
+   inicio n1 jogo1 l1 c1
+   putStrLn "\nteste 2:"
+   (n2, l2, c2, jogo2) <- readMatriz "teste2.txt"
+   inicio n2 jogo2 l2 c2
+   putStrLn "\nteste 3:"
+   (n3, l3, c3, jogo3) <- readMatriz "teste3.txt"
+   inicio n3 jogo3 l3 c3
+   putStrLn "\nteste 4:"
+   (n4, l4, c4, jogo4) <- readMatriz "teste4.txt"
+   inicio n4 jogo4 l4 c4
+   putStrLn "\nteste 5:"
+   (n5, l5, c5, jogo5) <- readMatriz "teste5.txt"
+   inicio n5 jogo5 l5 c5
